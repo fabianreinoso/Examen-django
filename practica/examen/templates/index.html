@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Examen de Django</h1>
+    <form action="{% url 'examen:resolver' %}" method="POST">
+        {% csrf_token %}
+        <ul>
+            {% for pregunta in preguntas %}
+                <li>{{pregunta.pregunta_texto}}</li>
+                    <ul>
+                        {%for opcion in pregunta.opcion_set.all %}
+                            <li>
+                                <input type="radio" name="pregunta_{{pregunta.id}}" value="{{opcion.puntos}}">
+                                {{opcion.opcion_texto}}
+                            </li>
+                        {% endfor %}
+                    </ul>
+            {% endfor %}
+        </ul>
+        <input type="submit" value="Enviar">
+
+    </form>
+</body>
+</html>
